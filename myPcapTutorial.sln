@@ -11,6 +11,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "myPcapEx02", "myPcapEx02\my
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "myPcapEx03", "myPcapEx03\myPcapEx03.vbproj", "{E3A7C5EF-BBA1-4708-8106-DBA44DD700C0}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "myPcapEx04", "myPcapEx04\myPcapEx04.vbproj", "{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,14 @@ Global
 		{E3A7C5EF-BBA1-4708-8106-DBA44DD700C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3A7C5EF-BBA1-4708-8106-DBA44DD700C0}.Release|x64.ActiveCfg = Release|x64
 		{E3A7C5EF-BBA1-4708-8106-DBA44DD700C0}.Release|x64.Build.0 = Release|x64
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Debug|x64.ActiveCfg = Debug|x64
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Debug|x64.Build.0 = Debug|x64
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Release|x64.ActiveCfg = Release|Any CPU
+		{65BBEAEE-A517-4203-BBC8-D1F1844B0BB8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
