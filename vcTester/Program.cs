@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using PcapDotNet.Core;
 using PcapDotNet.Packets;
+using PcapDotNet.Packets.IpV4;
+using PcapDotNet.Packets.Transport;
 
 namespace vcTester
 {
@@ -51,27 +53,38 @@ namespace vcTester
                                     PacketDeviceOpenAttributes.Promiscuous, // promiscuous mode
                                     1000))                                  // read timeout
             {
+                // Check the link layer. We support only Ethernet for simplicity.
+                if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
+                {
+                    Console.WriteLine("This program works only on Ethernet networks.");
+                    return;
+                }
+
+                // Compile the filter
+                using (BerkeleyPacketFilter filter = communicator.CreateFilter("ip and udp"))
+                {
+                    // Set the filter
+                    communicator.SetFilter(filter);
+                }
+
                 Console.WriteLine("Listening on " + selectedDevice.Description + "...");
 
-                // Retrieve the packets
-                Packet packet;
-                do
-                {
-                    PacketCommunicatorReceiveResult result = communicator.ReceivePacket(out packet);
-                    switch (result)
-                    {
-                        case PacketCommunicatorReceiveResult.Timeout:
-                            // Timeout elapsed
-                            continue;
-                        case PacketCommunicatorReceiveResult.Ok:
-                            Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " length:" +
-                                              packet.Length);
-                            break;
-                        default:
-                            throw new InvalidOperationException("The result " + result + " shoudl never be reached here");
-                    }
-                } while (true);
+                // start the capture
+                communicator.ReceivePackets(0, PacketHandler);
             }
+        }
+
+        // Callback function invoked by libpcap for every incoming packet
+        private static void PacketHandler(Packet packet)
+        {
+            // print timestamp and length of the packet
+            Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " length:" + packet.Length);
+
+            IpV4Datagram ip = packet.Ethernet.IpV4;
+            UdpDatagram udp = ip.Udp;
+
+            // print ip addresses and udp ports
+            Console.WriteLine(ip.Source + ":" + udp.SourcePort + " -> " + ip.Destination + ":" + udp.DestinationPort);
         }
     }
 }
