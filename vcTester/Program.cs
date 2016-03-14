@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using PcapDotNet.Core;
+using PcapDotNet.Packets;
 
-namespace SavingPacketsToADumpFile
+namespace ReadingPacketsFromADumpFile
 {
     class Program
     {
@@ -15,57 +15,37 @@ namespace SavingPacketsToADumpFile
                 return;
             }
 
-            // Retrieve the device list on the local machine
-            IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
+            // Create the offline device
+            OfflinePacketDevice selectedDevice = new OfflinePacketDevice(args[0]);
 
-            if (allDevices.Count == 0)
-            {
-                Console.WriteLine("No interfaces found! Make sure WinPcap is installed.");
-                return;
-            }
-
-            // Print the list
-            for (int i = 0; i != allDevices.Count; ++i)
-            {
-                LivePacketDevice device = allDevices[i];
-                Console.Write((i + 1) + ". " + device.Name);
-                if (device.Description != null)
-                    Console.WriteLine(" (" + device.Description + ")");
-                else
-                    Console.WriteLine(" (No description available)");
-            }
-
-            int deviceIndex = 0;
-            do
-            {
-                Console.WriteLine("Enter the interface number (1-" + allDevices.Count + "):");
-                string deviceIndexString = Console.ReadLine();
-                if (!int.TryParse(deviceIndexString, out deviceIndex) ||
-                    deviceIndex < 1 || deviceIndex > allDevices.Count)
-                {
-                    deviceIndex = 0;
-                }
-            } while (deviceIndex == 0);
-
-            // Take the selected adapter
-            PacketDevice selectedDevice = allDevices[deviceIndex - 1];
-
-            // Open the device
+            // Open the capture file
             using (PacketCommunicator communicator =
-                selectedDevice.Open(65536, // portion of the packet to capture
-                                           // 65536 guarantees that the whole packet will be captured on all the link layers
+                selectedDevice.Open(65536,                                  // portion of the packet to capture
+                                                                            // 65536 guarantees that the whole packet will be captured on all the link layers
                                     PacketDeviceOpenAttributes.Promiscuous, // promiscuous mode
-                                    1000)) // read timeout
+                                    1000))                                  // read timeout
             {
-                // Open the dump file
-                using (PacketDumpFile dumpFile = communicator.OpenDump(args[0]))
-                {
-                    Console.WriteLine("Listening on " + selectedDevice.Description + "... Press Ctrl+C to stop...");
-
-                    // start the capture
-                    communicator.ReceivePackets(0, dumpFile.Dump);
-                }
+                // Read and dispatch packets until EOF is reached
+                communicator.ReceivePackets(0, DispatcherHandler);
             }
+        }
+
+        private static void DispatcherHandler(Packet packet)
+        {
+            // print packet timestamp and packet length
+            Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " length:" + packet.Length);
+
+            // Print the packet
+            const int LineLength = 64;
+            for (int i = 0; i != packet.Length; ++i)
+            {
+                Console.Write((packet[i]).ToString("X2"));
+                if ((i + 1) % LineLength == 0)
+                    Console.WriteLine();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }
