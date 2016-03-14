@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using PcapDotNet.Core;
-using PcapDotNet.Packets;
-using PcapDotNet.Packets.IpV4;
-using PcapDotNet.Packets.Transport;
 
-namespace vcTester
+namespace SavingPacketsToADumpFile
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Retrieve the device list from the local machine
+            // Check command line
+            if (args.Length != 1)
+            {
+                Console.WriteLine("usage: " + Environment.GetCommandLineArgs()[0] + " <filename>");
+                return;
+            }
+
+            // Retrieve the device list on the local machine
             IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
 
             if (allDevices.Count == 0)
@@ -48,43 +52,20 @@ namespace vcTester
 
             // Open the device
             using (PacketCommunicator communicator =
-                selectedDevice.Open(65536,                                  // portion of the packet to capture
-                                                                            // 65536 guarantees that the whole packet will be captured on all the link layers
+                selectedDevice.Open(65536, // portion of the packet to capture
+                                           // 65536 guarantees that the whole packet will be captured on all the link layers
                                     PacketDeviceOpenAttributes.Promiscuous, // promiscuous mode
-                                    1000))                                  // read timeout
+                                    1000)) // read timeout
             {
-                // Check the link layer. We support only Ethernet for simplicity.
-                if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
+                // Open the dump file
+                using (PacketDumpFile dumpFile = communicator.OpenDump(args[0]))
                 {
-                    Console.WriteLine("This program works only on Ethernet networks.");
-                    return;
+                    Console.WriteLine("Listening on " + selectedDevice.Description + "... Press Ctrl+C to stop...");
+
+                    // start the capture
+                    communicator.ReceivePackets(0, dumpFile.Dump);
                 }
-
-                // Compile the filter
-                using (BerkeleyPacketFilter filter = communicator.CreateFilter("ip and udp"))
-                {
-                    // Set the filter
-                    communicator.SetFilter(filter);
-                }
-
-                Console.WriteLine("Listening on " + selectedDevice.Description + "...");
-
-                // start the capture
-                communicator.ReceivePackets(0, PacketHandler);
             }
-        }
-
-        // Callback function invoked by libpcap for every incoming packet
-        private static void PacketHandler(Packet packet)
-        {
-            // print timestamp and length of the packet
-            Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " length:" + packet.Length);
-
-            IpV4Datagram ip = packet.Ethernet.IpV4;
-            UdpDatagram udp = ip.Udp;
-
-            // print ip addresses and udp ports
-            Console.WriteLine(ip.Source + ":" + udp.SourcePort + " -> " + ip.Destination + ":" + udp.DestinationPort);
         }
     }
 }
