@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vcTester", "vcTester\vcTest
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "myPcapEx01", "myPcapEx01\myPcapEx01.vbproj", "{7334DF12-CCE0-4C55-95C0-5E3B548A2BB8}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "myPcapEx02", "myPcapEx02\myPcapEx02.vbproj", "{97A81293-9BBD-4CCC-9F89-43C73208CD46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{7334DF12-CCE0-4C55-95C0-5E3B548A2BB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7334DF12-CCE0-4C55-95C0-5E3B548A2BB8}.Release|x64.ActiveCfg = Release|x64
 		{7334DF12-CCE0-4C55-95C0-5E3B548A2BB8}.Release|x64.Build.0 = Release|x64
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Debug|x64.ActiveCfg = Debug|x64
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Debug|x64.Build.0 = Debug|x64
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Release|x64.ActiveCfg = Release|x64
+		{97A81293-9BBD-4CCC-9F89-43C73208CD46}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
