@@ -10,6 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Sample copied from https://github.com/PcapDotNet/Pcap.Net/issues/72 including the fix as below
+//    CHANGED if (tcp.DestinationPort == 80)
+//    TO if (tcp.DestinationPort == 80 || tcp.SourcePort == 80)
+
+
 namespace vcHttpCapture
 {
     class Program
@@ -97,7 +102,7 @@ namespace vcHttpCapture
             // print ip addresses and udp ports
             //Console.WriteLine(ip.Source + ":" + tcp.SourcePort + " -> " + ip.Destination + ":" + tcp.DestinationPort);
 
-            if (tcp.DestinationPort == 80)
+            if (tcp.DestinationPort == 80 || tcp.SourcePort == 80)
             {
                 HttpDatagram http = tcp.Http;
 
