@@ -21,6 +21,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "myPcapEx06b", "myPcapEx06b\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vcHttpCapture", "vcHttpCapture\vcHttpCapture.csproj", "{5A86BA80-77B9-48C5-999A-37CD53C11049}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSniffer", "SimpleSniffer\SimpleSniffer.csproj", "{D8AAD3CA-608B-431C-A834-80AB875C788E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,14 @@ Global
 		{5A86BA80-77B9-48C5-999A-37CD53C11049}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A86BA80-77B9-48C5-999A-37CD53C11049}.Release|x64.ActiveCfg = Release|Any CPU
 		{5A86BA80-77B9-48C5-999A-37CD53C11049}.Release|x64.Build.0 = Release|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Debug|x64.Build.0 = Debug|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Release|x64.ActiveCfg = Release|Any CPU
+		{D8AAD3CA-608B-431C-A834-80AB875C788E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
