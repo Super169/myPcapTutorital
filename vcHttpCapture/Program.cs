@@ -45,7 +45,9 @@ namespace vcHttpCapture
             do
             {
                 Console.WriteLine("Enter the interface number (1-" + allDevices.Count + "):");
-                string deviceIndexString = Console.ReadLine();
+                // string deviceIndexString = Console.ReadLine();
+                // For to use first devices
+                string deviceIndexString = "1";
                 if (!int.TryParse(deviceIndexString, out deviceIndex) ||
                     deviceIndex < 1 || deviceIndex > allDevices.Count)
                 {
@@ -102,7 +104,8 @@ namespace vcHttpCapture
             // print ip addresses and udp ports
             //Console.WriteLine(ip.Source + ":" + tcp.SourcePort + " -> " + ip.Destination + ":" + tcp.DestinationPort);
 
-            if (tcp.DestinationPort == 80 || tcp.SourcePort == 80)
+            if (tcp.DestinationPort == 80 || tcp.SourcePort == 80 ||
+                tcp.DestinationPort == 8080 || tcp.SourcePort == 8080)
             {
                 HttpDatagram http = tcp.Http;
 
